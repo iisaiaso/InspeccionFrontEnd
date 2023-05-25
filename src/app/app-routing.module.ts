@@ -8,8 +8,8 @@ import { SiniestrosSoatComponent } from './siniestros-soat/siniestros-soat.compo
 const routes: Routes = [
   { path: 'index', component: InspectionComponent },
   { path: '', component: LoginComponent },
-  { path: 'tarjeta-credito', component: TarjetaCreditoComponent },
-  { path: 'siniestros-soat', component: SiniestrosSoatComponent },
+  { path: 'InspeccionFrontEnd/tarjeta-credito', component: TarjetaCreditoComponent },
+  { path: 'InspeccionFrontEnd/siniestros-soat', component: SiniestrosSoatComponent },
 ];
 
 @NgModule({
