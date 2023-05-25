@@ -1,0 +1,516 @@
+<div class="container-fluid">
+    <section class="my-3 mx-1 mx-lg-4">
+        <!-- Logo -->
+        <div class="mb-3">
+            <img src="https://seeklogo.com/images/P/positiva-compania-de-seguros-logo-086F36F51E-seeklogo.com.png"
+                alt="Logo de la empresa" width="100" height="50" />
+        </div>
+        <!-- End Logo -->
+        <!-- {{formRegister.value|json}} -->
+        <div class="row justify-content-md-center">
+            <div class="card col-md-12 col-lg-10 col-xl-9 col-xxl-7 mb-3 border border-primary border-2 rounded-4">
+                <div class="card-body">
+                    <h5 class="text-primary text-center mb-3">
+                        FORMULARIO DE SOLICITUDES DE SINIESTROS DE SOAT
+                    </h5>
+                    <form [formGroup]="formRegister">
+                        <!-- Datos del solicitante -->
+                        <div>
+                            <p class="fw-semibold text-white ps-2 bg-primary">
+                                DATOS DEL SOLICITANTE
+                            </p>
+                            <div class="px-4">
+                                <div class="mb-md-2 row">
+                                    <label for="tipoSolicitante" class="col-form-label col-form-label-sm col-md-3">Tipo
+                                        de documento (*)</label>
+                                    <div class="col-md-3">
+                                        <select id="tipoSolicitante" formControlName="tipoSolicitante"
+                                            (change)="tipoSolicinate($event)"
+                                            class="form-control form-control-sm rounded-0">
+                                            <option *ngFor="let docSolicitante of DOCUMENTO_SOLICITANTE"
+                                                value="{{ docSolicitante.id }}">
+                                                {{ docSolicitante.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <label for="" class="col-form-label col-form-label-sm col-md-3">Nro. Documento
+                                        (*)</label>
+                                    <div class="col-md-3">
+                                        <input type="text" formControlName="documentoSolicitante"
+                                            [ngClass]="{'is-valid': formRegister.controls['documentoSolicitante'].valid}"
+                                            class=" form-control form-control-sm rounded-0 text-uppercase" />
+                                    </div>
+
+                                </div>
+                                <div class="mb-md-2 row"
+                                    *ngIf="this.formRegister.controls['tipoSolicitante'].value == '3'">
+                                    <label for="razonSolicitante"
+                                        class="col-form-label col-form-label-sm col-md-3">Razón social
+                                        (*)</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="razonSolicitante" formControlName="razonSolicitante"
+                                            class="form-control form-control-sm rounded-0 text-uppercase" />
+                                    </div>
+                                </div>
+                                <div class="mb-md-2 row"
+                                    *ngIf="this.formRegister.controls['tipoSolicitante'].value != '3'">
+                                    <label for="nombreSolicitante"
+                                        class="col-form-label col-form-label-sm col-md-3">Nombres (*)</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="nombreSolicitante" formControlName="nombreSolicitante"
+                                            class="form-control form-control-sm rounded-0 text-uppercase" />
+                                    </div>
+                                </div>
+                                <div class="mb-md-2 row"
+                                    *ngIf="this.formRegister.controls['tipoSolicitante'].value != '3'">
+                                    <label for="apellidoSolicitante"
+                                        class="col-form-label col-form-label-sm col-md-3">Apellidos
+                                        (*)</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="apellidoSolicitante"
+                                            formControlName="apellidoSolicitante"
+                                            class="form-control form-control-sm rounded-0 text-uppercase" />
+                                    </div>
+                                </div>
+                                <div class="mb-md-2 row">
+                                    <label for="" class="col-form-label col-form-label-sm col-md-3">Corre
+                                        electronico:</label>
+                                    <div class="col-md-9">
+                                        <input type="text" formControlName="correoSolicitante"
+                                            class="form-control form-control-sm rounded-0 text-uppercase" />
+                                        <div *ngIf="formRegister.controls['correoSolicitante'].invalid"
+                                            class="invalid-correo">
+                                            <small>Formato de correo invalido.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-md-2 row">
+                                    <label for="" class="col-form-label col-form-label-sm col-md-3">Nro.
+                                        Telefono:</label>
+                                    <div class="col-md-3">
+                                        <input type="text" formControlName="telefonoSolicitante"
+                                            class="form-control form-control-sm rounded-0" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="" *ngIf="formRegister.controls['telefonoSolicitante'].invalid"
+                                            class="invalid-correo">
+                                            <small>Ingresar numero de telefono valido.</small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="mb-md-2 row">
+                                    <label for="direccionSolicitante"
+                                        class="col-form-label col-form-label-sm col-md-3">Direccion
+                                        (*):</label>
+                                    <div class="col-md-9">
+                                        <input type="text" formControlName="direccionSolicitante"
+                                            class="form-control form-control-sm rounded-0 text-uppercase" />
+                                    </div>
+                                </div>
+                                <div class="row mb-md-2 mb-3"></div>
+                                <div class="form-check"
+                                    *ngIf="this.formRegister.controls['documentoSolicitante'].value != '' && this.formRegister.controls['nombreSolicitante'].value != '' && this.formRegister.controls['apellidoSolicitante'].value != '' && this.formRegister.controls['direccionSolicitante'].value != ''">
+                                    <input class="form-check-input" type="checkbox" id="checkSolicitante"
+                                        [checked]="checkboxMarcado" (change)="checkSolicitante($event) "
+                                        formControlName="checkSolicitante" [readOnly]="disableSolicitante" />
+                                    <label class="form-check-label" for="checkSolicitante">
+                                        Marque la casilla si los datos del solicitante son los
+                                        mismos que el lesionado
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Datos del solicitante -->
+
+                        <!-- Datos del agraviado -->
+                        <div>
+                            <p class="fw-bold text-white ps-2 bg-primary">
+                                DATOS DEL AGRAVIADO
+                            </p>
+                            <div class="px-4">
+                                <div class="mb-md-2 row">
+                                    <label for="tipoAgraviado" class="col-form-label col-form-label-sm col-md-3">Tipo de
+                                        documento
+                                        (*)</label>
+                                    <div class="col-md-3">
+                                        <select id="tipoAgraviado" formControlName="tipoAgraviado"
+                                            (change)="tipoAgraviado($event)"
+                                            [attr.disabled]="disableAgraviado == true ? true : null"
+                                            class="form-control form-control-sm rounded-0">
+                                            <option *ngFor="let docAgraviado of DOCUMENTO_AGRAVIADO"
+                                                value="{{ docAgraviado.id }}">
+                                                {{ docAgraviado.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <label for="documentoAgraviado"
+                                        class="col-form-label col-form-label-sm col-md-3">Nro. Documento
+                                        (*)</label>
+                                    <div class="col-md-3">
+                                        <input type="text" id="documentoAgraviado" formControlName="documentoAgraviado"
+                                            [attr.disabled]="disableAgraviado == true ? true : null"
+                                            [ngClass]="{'is-valid': formRegister.controls['documentoAgraviado'].valid}"
+                                            class="form-control form-control-sm rounded-0 text-uppercase">
+                                    </div>
+                                </div>
+                                <div class="mb-md-2 row">
+                                    <label for="nombreAgraviado"
+                                        class="col-form-label col-form-label-sm col-md-3">Nombres (*)</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="nombreAgraviado" formControlName="nombreAgraviado"
+                                            [attr.disabled]="disableAgraviado == true ? true : null"
+                                            class="form-control form-control-sm rounded-0 text-uppercase">
+                                    </div>
+                                </div>
+                                <div class="mb-md-2 row">
+                                    <label for="apellidoAgraviado"
+                                        class="col-form-label col-form-label-sm col-md-3">Apellidos
+                                        (*)</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="apellidoAgraviado" formControlName="apellidoAgraviado"
+                                            [attr.disabled]="disableAgraviado == true ? true : null"
+                                            class="form-control form-control-sm rounded-0 text-uppercase" />
+                                    </div>
+                                </div>
+                                <div class="mb-md-2 row">
+                                    <label for="direccionAgraviado"
+                                        class="col-form-label col-form-label-sm col-md-3">Direccion
+                                        (*):</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="direccionAgraviado" formControlName="direccionAgraviado"
+                                            [attr.disabled]="disableAgraviado == true ? true : null"
+                                            class="form-control form-control-sm rounded-0 text-uppercase" />
+                                    </div>
+                                </div>
+                                <div class="mb-md-2 row">
+                                    <label for="placaAgraviado"
+                                        class="col-form-label col-form-label-sm col-md-4 col-lg-3">Nro.
+                                        Placa
+                                        del vehículo (*)</label>
+                                    <div class="col-md-2 col-lg-3">
+                                        <input type="text" id="placaAgraviado" formControlName="placaAgraviado"
+                                            class="form-control form-control-sm rounded-0 text-uppercase"
+                                            [ngClass]="{'is-valid': formRegister.controls['placaAgraviado'].valid}"
+                                            style="width: 100%" />
+                                    </div>
+                                    <label for="fechaAgraviado" class="col-form-label col-form-label-sm col-md-3">Fecha
+                                        del siniestro
+                                        (*)</label>
+                                    <div class="col-md-3">
+                                        <input type="date" id="fechaAgraviado" formControlName="fechaAgraviado"
+                                            [max]="fechaActual" class="form-control form-control-sm rounded-0" />
+                                    </div>
+                                </div>
+                                <div class="mb-4 row">
+                                    <label for="coberturaAgraviado"
+                                        class="col-form-label col-form-label-sm col-md-3">Activar cobertura
+                                        (*)
+                                    </label>
+                                    <div class="col-md-9">
+                                        <select id="coberturaAgraviado" formControlName="coberturaAgraviado"
+                                            *ngIf="this.formRegister.controls['tipoSolicitante'].value != '3'; else other"
+                                            (change)="tipoCobertura($event)"
+                                            class="form-control form-control-sm rounded-0">
+                                            <option value="">SELECCIONE UNA COBERTURA</option>
+                                            <option value="8">INCAPACIDAD TEMPORAL</option>
+                                            <option value="9">INVALIDEZ PERMANENTE</option>
+                                            <option value="10">MUERTE</option>
+                                            <option value="11">GASTOS MÉDICOS</option>
+                                            <option value="12">GASTOS DE SEPELIO</option>
+
+                                        </select>
+                                        <ng-template #other>
+                                            <select id="coberturaAgraviado" formControlName="coberturaAgraviado"
+                                                class="form-control form-control-sm rounded-0">
+                                                <option value="12">GASTOS DE SEPELIO</option>
+
+                                            </select>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Datos del agraviado -->
+
+                        <!-- Datos de pago -->
+                        <div>
+                            <p class="fw-bold text-white ps-2 bg-primary">DATOS DE PAGO</p>
+                            <div class="px-4">
+                                <div class="mb-3 row">
+                                    <label for="metodoPago" class="col-form-label col-form-label-sm col-md-3">Método de
+                                        pago:
+                                    </label>
+                                    <div class="col-md-9">
+                                        <select type="text" id="metodoPago" formControlName="metodoPago"
+                                            (change)=" tipoMetodoPago($event)"
+                                            class="form-control form-control-sm rounded-0">
+                                            <option *ngFor="let pago of METODO_PAGO" value="{{ pago.id }}">
+                                                {{ pago.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div *ngIf="this.formRegister.controls['metodoPago'].value == 142" class="mb-3">
+                                    <div class="mb-2 row">
+                                        <label for="entidadBancaria"
+                                            class="col-form-label col-form-label-sm col-md-3">Entidad Bancaria (*)
+                                        </label>
+                                        <div class="col-md-9">
+                                            <select type="text" id="entidadBancaria" formControlName="entidadBancaria"
+                                                (change)="tipoEntidadBancaria($event)"
+                                                class="form-control form-control-sm rounded-0">
+                                                <option *ngFor="let entidad of ENTIDAD" value="{{ entidad.id }}">
+                                                    {{ entidad.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mb-md-2 row"
+                                        *ngIf="this.formRegister.controls['entidadBancaria'].value ==135">
+                                        <label for="nombreEntidad"
+                                            class="col-form-label col-form-label-sm col-md-3">Nombre
+                                            de
+                                            Entidad(*):
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="nombreEntidad" formControlName="nombreEntidad"
+                                                class="form-control form-control-sm rounded-0 text-uppercase" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-md-2 row">
+                                        <label for="nroCuenta" class="col-form-label col-form-label-sm col-md-3">Nro.
+                                            Cuenta
+                                            (*)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="nroCuenta" formControlName="nroCuenta"
+                                                class="form-control form-control-sm rounded-0 text-uppercase" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-4 row">
+                                        <label for="codInterbancario"
+                                            class="col-form-label col-form-label-sm col-md-3">Código interbancario
+                                            (*)
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="codInterbancario" formControlName="codInterbancario"
+                                                class="form-control form-control-sm rounded-0 text-uppercase" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Datos de pago -->
+
+                        <!-- Documentos -->
+                        <div>
+                            <p class="fw-bold text-white ps-2 bg-primary">DOCUMENTOS</p>
+                            <div class="px-4">
+                                <p class="fw-semibold">
+                                    Adjuntar los siguientes documentos para completar la solicitud
+                                </p>
+                                <div class="border border-secondary-subtle mb-3"
+                                    style="background-color: rgba(237, 237, 237, 0.955)">
+                                    <ol style="font-size: smaller"
+                                        *ngIf="this.formRegister.controls['coberturaAgraviado'].value ==8 || this.formRegister.controls['coberturaAgraviado'].value == 9 ">
+                                        <li>
+                                            Solicitud de Cobertura.
+                                            <a href="#">Descargar plantilla</a>
+                                        </li>
+                                        <li>Documento de Identidad del Solicitante.</li>
+                                        <li>Documento de Identidad del Lesionado.</li>
+                                        <li>Denuncia Policial.</li>
+                                        <li>Copia del Certificado SOAT.</li>
+                                        <li>
+                                            Original del Certificado Médico del Lesionado, indicando
+                                            el menoscabo o porcentaje de Invalidez.
+                                        </li>
+                                        <li>
+                                            Original del Certificado médico, donde se señale los días
+                                        </li>
+                                    </ol>
+
+                                    <ol style="font-size: smaller"
+                                        *ngIf="this.formRegister.controls['coberturaAgraviado'].value ==10 ">
+                                        <li>
+                                            Solicitud de Cobertura.
+                                            <a href="#">Descargar plantilla</a>
+                                        </li>
+                                        <li>Documento de Identidad del Solicitante.</li>
+                                        <li>Documento de Identidad del Beneficiario.</li>
+                                        <li>Certificada de la Denuncia Policial.</li>
+                                        <li>Certificado SOAT.</li>
+                                        <li>Certificado de Defunción del Fallecido.</li>
+                                        <li>
+                                            Original o Copia Legalizada del Acta o
+                                            Partida de Matrimonio del Fallecido.
+                                        </li>
+                                        <li>
+                                            Original o Copia Legalizada del Acta o
+                                            Partida de Nacimiento del Beneficiario.
+                                        </li>
+                                        <li>
+                                            Original de Declaración Jurada con firma
+                                            legalizada de no existir otros beneficiarios con
+                                            mayor prioridad.
+                                        </li>
+                                        <li>
+                                            Constancia de apertura de cuenta de
+                                            ahorros en moneda nacional a nombre del
+                                            beneficiario menor de 18 años o mayor de 18
+                                            años con incapacidad.
+                                        </li>
+                                        <li>
+                                            Copia certificada de la Sentencia Judicial
+                                            consentida que nombre al Tutor legal/Curador
+                                            del beneficiario menor de 18 años o mayor de
+                                            18 años con incapacidad.
+                                        </li>
+                                    </ol>
+                                    <ol style="font-size: smaller"
+                                        *ngIf="this.formRegister.controls['coberturaAgraviado'].value ==11 ">
+                                        <li>
+                                            Solicitud de Cobertura.
+                                            <a href="#">Descargar plantilla</a>
+                                        </li>
+                                        <li>Documento de Identidad del Solicitante.</li>
+                                        <li> Documento de Identidad del Lesionado o
+                                            Fallecido.
+                                        </li>
+                                        <li> Documento de Identidad de la persona a
+                                            quien se le hará el reembolso.
+                                        </li>
+                                        <li>Denuncia Policial.</li>
+                                        <li>Copia del Certificado SOAT.</li>
+                                        <li>
+                                            Comprobantes de Pago originales por gastos
+                                            médicos a nombre de la persona que incurrió en
+                                            el gasto.
+
+                                        </li>
+                                        <li>
+                                            Original de la Documentación de sustento de
+                                            la atención médica al Lesionado
+                                        </li>
+                                    </ol>
+                                    <ol style="font-size: smaller"
+                                        *ngIf="this.formRegister.controls['coberturaAgraviado'].value ==12 ">
+                                        <li>
+                                            Solicitud de Cobertura.
+                                            <a href="#">Descargar plantilla</a>
+                                        </li>
+                                        <li>Documento de Identidad del Solicitante.</li>
+                                        <li> Documento de Identidad del Lesionado o
+                                            Fallecido.
+                                        </li>
+                                        <li> Documento de Identidad de la persona a
+                                            quien se le hará el reembolso.
+                                        </li>
+                                        <li>Denuncia Policial.</li>
+                                        <li>Copia del Certificado SOAT.</li>
+                                        <li>
+                                            Original de Comprobante(s) de Pago por los
+                                            gastos de servicios funerarios a nombre de la
+                                            persona que hizo el gasto (deberá indicar el
+                                            nombre del Lesionado Fallecido).
+
+                                        </li>
+                                        <li>
+                                            Certificado de Defunción del Fallecido.
+                                        </li>
+                                    </ol>
+                                </div>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-sm-7 col-md-6">
+                                            <p class="mb-0 fw-semibold">
+                                                Es obligatorio agregar al menos un adjunto
+                                            </p>
+                                            <p class="fw-semibold">
+                                                Formatos: PDF, JPEG o PNG. Max. 15MB c/u
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-5 col-md-6 mb-4 d-flex flex-column">
+                                            <div class="mt-2">
+                                                <input type="file" #fileInput style="display: none"
+                                                    accept=".png,.jpeg,.pdf" formControlName="subirArchivo"
+                                                    (change)="onFileSelected($event)">
+                                                <button (click)="fileInput.click()"
+                                                    class="btn text-white px-md-3 rounded-1 float-end fw-semibold"
+                                                    style="background-color: orange; padding-top: 2px; padding-bottom: 2px;">Agregar
+                                                    Archivo</button>
+                                            </div>
+                                            <div *ngIf="formRegister.controls['subirArchivo'].invalid" class="text-end"
+                                                style=" color: darkgray;">
+                                                <small>Es obligatorio subir los archivos solicitados.</small>
+                                            </div>
+                                            <ng-template>
+
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table  table-hover">
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th scope="col">Nombre</th>
+                                                    <th scope="col">Tamaño</th>
+                                                    <th scope="col">Aciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- <tr class="text-center">
+                                                    <td class="row-table">
+                                                        FORMULARIO_DE_REGISTRO_DE_SINIESTROS_SOAT_CONECTADO_A JIRA.pdf
+                                                    </td>
+                                                    <td class="row-table">Tamaño KB</td>
+                                                    <td>
+                                                        <button class="btn border-0 p-0">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr> -->
+                                                <tr class="text-center" *ngFor="let file of uploadFiles">
+                                                    <td class="row-table">{{file.name}}</td>
+                                                    <td class="row-table">{{file.size}} KB</td>
+                                                    <td>
+                                                        <button class="btn border-0 p-0" (click)="deleteFile(file)">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- Fin Documentos -->
+                        <div class="text-end mb-3">
+                            <div class="mb-3 d-flex justify-content-center justify-content-sm-end">
+                                <div class="g-recaptcha">
+                                    <re-captcha formControlName="recaptcha"
+                                        siteKey="6LfBZyEmAAAAAFDOyBjoCuCfzR_YwOrk5sBwBM08"></re-captcha>
+                                </div>
+                            </div>
+                            <div class="px-4">
+                                <button class="btn text-white px-3 rounded-1 fw-semibold me-3"
+                                    style=" background-color: orange; padding-top: 2px; padding-bottom: 2px;"
+                                    (click)="clearFormulario()">
+                                    Limpiar
+                                </button>
+                                <button class="btn text-white px-3 rounded-1 fw-semibold"
+                                    style="background-color: orange;padding-top: 2px;padding-bottom: 2px;"
+                                    (click)="registrarSiniestro()" [disabled]="this.formRegister.invalid">
+                                    Guardar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

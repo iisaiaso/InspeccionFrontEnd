@@ -1,0 +1,9 @@
+.gradient {
+    background: rgb(81, 78, 136);
+    background: linear-gradient(90deg, rgba(81, 78, 136, 0.47951680672268904) 0%, rgba(78, 65, 67, 0.6587885154061625) 49%, rgba(85, 53, 58, 0.7456232492997199) 100%);
+}
+
+.margins {
+    margin-top: 238px;
+    margin-bottom: 238px;
+}

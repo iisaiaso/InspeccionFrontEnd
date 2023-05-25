@@ -1,55 +1,94 @@
-<button
-  type="button"
-  class="btn btn-primary float-end m-2"
-  data-bs-toggle="modal"
-  data-bs-target="#staticBackdrop"
->
-  Agregar
-</button>
+<div class="col-12 col-md-10 col-lg-8 col-xl-6  float-md-end">
+  <div class="row gx-1 gy-1">
+    <div class="col-sm-6 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+      <button type="button" class="btn btn-primary p-0 py-1 w-100" data-bs-toggle="modal" (click)="modalAdd()"
+        data-bs-target="#staticBackdrop">
+        Agregar
+      </button>
+    </div>
+    <div class="col-sm-6 col-sm-4 col-md-5 col-lg-5 col-xl-5">
+      <button type="button" class="btn btn-success p-0 py-1 w-100" data-bs-toggle="modal"
+        data-bs-target="#exampleModal">
+        Mostrar tipo de Inspeccion
+      </button>
+    </div>
+    <div class="col-sm-6 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+      <a href="/tarjeta-credito" class="">
+        <button type="button" class="btn btn-warning p-0 py-1 w-100">
+          Tarjeta
+        </button>
+      </a>
+    </div>
+    <div class="col-sm-6 col-sm-4 col-md-3 col-lg-3 col-xl-3">
+      <a href="/siniestros-soat" class="">
+        <button type="button" class="btn btn-danger p-0 py-1 w-100">
+          Registar Siniestros
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
 
-<button
-  type="button"
-  class="btn btn-success float-end m-2"
-  data-bs-toggle="modal"
-  data-bs-target="#exampleModal"
->
-  Mostrar tipoo de Inspeccion
-</button>
 <table class="table table-striped">
   <thead>
-    <th>Id</th>
-    <th>Tipo de Inspeccion</th>
-    <th>Estado</th>
-    <th>Comentario</th>
-    <th>Opciones</th>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Tipo de Inspeccion</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Comentario</th>
+      <th scope="col">Opciones</th>
+    </tr>
   </thead>
   <tbody>
-    <td>1</td>
-    <td>Verano</td>
-    <td>Otto</td>
-    <td>Me gustas</td>
-    <td>Eliminar</td>
+    <tr *ngFor="let item of inspectionList$ | async">
+      <th>{{ item.id }}</th>
+      <td>{{ item.inspectionTypeId }}</td>
+      <td>{{ item.status }}</td>
+      <td>{{ item.comments }}</td>
+      <td>
+        <button class="btn btn-outline-primary me-2 mb-1" (click)="modalEdit(item)" data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop">
+          <i class="fa fa-pencil-square-o"></i>
+        </button>
+        <button class="btn btn-outline-danger me-2 mb-1" (click)="delete(item)">
+          <i class="fa fa-trash-o"></i>
+        </button>
+      </td>
+    </tr>
   </tbody>
 </table>
 
+<div class="alert alert-success" role="alert" id="add-success-alert" style="display: none">
+  Inspecion creada con exito
+</div>
+<div class="alert alert-primary" role="alert" id="update-success-alert" style="display: none">
+  Inspecion actualizada con exito
+</div>
+<div class="alert alert-danger" role="alert" id="delete-success-alert" style="display: none">
+  Inspecion eliminada con exito
+</div>
+
 <!-- Modal de Tipo Inspeccion -->
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Tipo de Inspeccion</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="modalClose()"></button>
+      </div>
+      <div class="modal-body">
+        <table style="width: 50%;">
+          <tr *ngFor="let type of inspectionTypeList$ | async">
+            <td class="text-center">{{ type.id }}</td>
+            <td class="text-center">{{ type.inspectionName }}</td>
+            <td>
+              <button (click)="deleteInspection(type.id)" class="btn btn-outline-danger mb-2">
+                <i class="fa fa-trash-o"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
@@ -57,25 +96,20 @@
 <!-- Fin Modal-->
 
 <!-- Modal de Registro -->
-<div
-  class="modal fade"
-  id="staticBackdrop"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdroplLabel">
-          Agregar Inspección
+          {{ modalTitle }}
         </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="add-edit-modal-close"
+          (click)="modalClose()"></button>
+      </div>
+      <div class="modal-body">
+        <app-add-edit-inspection [inspection]="inspection"
+          *ngIf="activeAddInspectionComponent"></app-add-edit-inspection>
       </div>
     </div>
   </div>

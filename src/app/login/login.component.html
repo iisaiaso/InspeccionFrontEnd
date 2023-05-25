@@ -1,0 +1,35 @@
+<div class="container-full gradient">
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="col-10 col-sm-8 col-md-6 col-lg-5 col-xl-3 rounded-2 px-4 py-3 shadow-lg bg-light margins">
+            <h4 class="text-center text-uppercase my-3">Log In Inspecciones</h4>
+            <form>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                    <input class="form-control" name="user" [(ngModel)]="user" type="text"
+                        placeholder="Correo o Usuario">
+                </div>
+                <div class="input-group mb-4">
+                    <span class="input-group-text"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                    <input class="form-control" name="password" [(ngModel)]="password" type="password"
+                        placeholder="Contraseña">
+                </div>
+                <div class="row justify-content-between mb-2">
+                    <div class="col-6">
+                        <button class="btn btn-success" (click)="ingresar()">
+                            <i class="fa fa-sign-in"></i> Ingresar
+                        </button>
+                    </div>
+                    <div class="col-6 text-end">
+                        <button class="btn btn-danger" (click)="cancelar()">
+                            <i class="fa fa-times-circle-o"></i> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="alert alert-danger" role="alert" id="incorrect-success-alert" style="display: none">
+                {{mensaje}}
+            </div>
+
+        </div>
+    </div>
+</div>
