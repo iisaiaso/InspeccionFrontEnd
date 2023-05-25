@@ -13,6 +13,7 @@ import { TarjetaCreditoComponent } from './tarjeta-credito/tarjeta-credito.compo
 import { SiniestrosSoatComponent } from './siniestros-soat/siniestros-soat.component';
 import { RECAPTCHA_SETTINGS, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { RecaptchaFormsModule } from 'ng-recaptcha';
     FormsModule,
     ReactiveFormsModule,
     RecaptchaModule,
-    RecaptchaFormsModule
+    RecaptchaFormsModule,
+    RouterModule
   ],
   providers: [{
     provide: RECAPTCHA_SETTINGS,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { log } from 'console';
 import { Observable } from 'rxjs';
 import { InspectionService } from 'src/app/services/inspection.services';
@@ -21,13 +22,21 @@ export class ShowInspectionComponent implements OnInit {
 
   inspectionTypesMap: Map<number, string> = new Map();
 
-  constructor(private inspectionService: InspectionService) {}
+  constructor(private inspectionService: InspectionService, private router: Router) { }
 
   ngOnInit(): void {
     // this.inspectionService.getInspection().subscribe(res => { this.inspectionList = res; console.log('Lista', this.inspectionList) })
     this.inspectionList$ = this.inspectionService.getInspection();
     this.inspectionTypeList$ = this.inspectionService.getInspectionType();
     this.refreshInspectionTypesMap();
+  }
+
+
+  siniestroSoat() {
+    this.router.navigate(['/siniestros-soat/']);
+  }
+  tarjetaCredito() {
+    this.router.navigate(['/tarjeta-credito/']);
   }
 
   refreshInspectionTypesMap() {

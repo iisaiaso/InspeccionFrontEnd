@@ -1,62 +1,67 @@
-<div class="col-12 col-md-10 col-lg-8 col-xl-6  float-md-end">
-  <div class="row gx-1 gy-1">
-    <div class="col-sm-6 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-      <button type="button" class="btn btn-primary p-0 py-1 w-100" data-bs-toggle="modal" (click)="modalAdd()"
-        data-bs-target="#staticBackdrop">
-        Agregar
-      </button>
-    </div>
-    <div class="col-sm-6 col-sm-4 col-md-5 col-lg-5 col-xl-5">
-      <button type="button" class="btn btn-success p-0 py-1 w-100" data-bs-toggle="modal"
-        data-bs-target="#exampleModal">
-        Mostrar tipo de Inspeccion
-      </button>
-    </div>
-    <div class="col-sm-6 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-      <a href="InspeccionFrontEnd/tarjeta-credito" class="">
-        <button type="button" class="btn btn-warning p-0 py-1 w-100">
-          Tarjeta
+<div class="row">
+  <div class="col-xl-6 col-lg-4 col-md-2"></div>
+  <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+    <div class="row gx-1 gy-1">
+      <div class="col-sm-6 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+        <button type="button" class="btn btn-primary p-0 py-1 w-100" data-bs-toggle="modal" (click)="modalAdd()"
+          data-bs-target="#staticBackdrop">
+          Agregar
         </button>
-      </a>
-    </div>
-    <div class="col-sm-6 col-sm-4 col-md-3 col-lg-3 col-xl-3">
-      <a href="InspeccionFrontEnd/siniestros-soat" class="">
-        <button type="button" class="btn btn-danger p-0 py-1 w-100">
-          Registar Siniestros
+      </div>
+      <div class="col-sm-6 col-sm-4 col-md-5 col-lg-5 col-xl-5">
+        <button type="button" class="btn btn-success p-0 py-1 w-100" data-bs-toggle="modal"
+          data-bs-target="#exampleModal">
+          Mostrar tipo de Inspeccion
         </button>
-      </a>
+      </div>
+      <div class="col-sm-6 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+        <a class="">
+          <button type="button" (click)="tarjetaCredito()" class="btn btn-warning p-0 py-1 w-100">
+            Tarjeta
+          </button>
+        </a>
+      </div>
+      <div class="col-sm-6 col-sm-4 col-md-3 col-lg-3 col-xl-3">
+        <a class="">
+          <button type="button" (click)="siniestroSoat()" class="btn btn-danger p-0 py-1 w-100">
+            Registar Siniestros
+          </button>
+        </a>
+      </div>
     </div>
   </div>
 </div>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Tipo de Inspeccion</th>
-      <th scope="col">Estado</th>
-      <th scope="col">Comentario</th>
-      <th scope="col">Opciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of inspectionList$ | async">
-      <th>{{ item.id }}</th>
-      <td>{{ item.inspectionTypeId }}</td>
-      <td>{{ item.status }}</td>
-      <td>{{ item.comments }}</td>
-      <td>
-        <button class="btn btn-outline-primary me-2 mb-1" (click)="modalEdit(item)" data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop">
-          <i class="fa fa-pencil-square-o"></i>
-        </button>
-        <button class="btn btn-outline-danger me-2 mb-1" (click)="delete(item)">
-          <i class="fa fa-trash-o"></i>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Tipo de Inspeccion</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Comentario</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of inspectionList$ | async">
+        <th>{{ item.id }}</th>
+        <td>{{ item.inspectionTypeId }}</td>
+        <td>{{ item.status }}</td>
+        <td>{{ item.comments }}</td>
+        <td>
+          <button class="btn btn-outline-primary me-2 mb-1" (click)="modalEdit(item)" data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop">
+            <i class="fa fa-pencil-square-o"></i>
+          </button>
+          <button class="btn btn-outline-danger me-2 mb-1" (click)="delete(item)">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <div class="alert alert-success" role="alert" id="add-success-alert" style="display: none">
   Inspecion creada con exito
